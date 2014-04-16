@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Objectfiller.NET : ObjectFiller .NET" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Objectfiller.NET</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/gokTyBalD/ObjectFiller.NET">View on GitHub</a>
+
+          <h1 id="project_title">Objectfiller.NET</h1>
+          <h2 id="project_tagline">ObjectFiller .NET</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/gokTyBalD/ObjectFiller.NET/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/gokTyBalD/ObjectFiller.NET/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>The <strong>.NET ObjectFiller</strong> fills the properties of your .NET objects with random data!
+It has a very comfortable Fluent API.
+You are able to fill object instances or you just let them create for you. 
+It is possible to create instances of classes which have constructors with parameters.
+You can also fill properties which are a interface.
+The <strong>.NET ObjectFiller</strong> also supports Lists and Dictionaries.</p>
+
+<h2>
+<a name="where-can-i-get-it" class="anchor" href="#where-can-i-get-it"><span class="octicon octicon-link"></span></a>Where can i get it?</h2>
+
+<p>Easy, you can find it at nuget! It's just one DLL!</p>
+
+<p><strong>Look here:</strong> <a href="https://www.nuget.org/packages/Tynamix.ObjectFiller">https://www.nuget.org/packages/Tynamix.ObjectFiller</a></p>
+
+<h2>
+<a name="for-what-do-you-need-it" class="anchor" href="#for-what-do-you-need-it"><span class="octicon octicon-link"></span></a>For what do you need it?</h2>
+
+<p>You can use the <strong>.NET ObjectFiller</strong> for generating test data for your <strong>UnitTests</strong> or for your <strong>DesignViewModels</strong> in WPF or for whatever you need some random testdata.
+I will show you some examples how you can work with it.</p>
+
+<h2>
+<a name="can-i-extend-the-net-objectfiller" class="anchor" href="#can-i-extend-the-net-objectfiller"><span class="octicon octicon-link"></span></a>Can i extend the .NET ObjectFiller</h2>
+
+<p>The <strong>.NET ObjectFiller</strong> is very flexible and easy to extend. With the help of the <strong>FluentAPI</strong> you can configure and extend the ObjectFiller. In the examples i will show you how to do it.</p>
+
+<h2>
+<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+<h3>
+<a name="lets-start-easy" class="anchor" href="#lets-start-easy"><span class="octicon octicon-link"></span></a>Let's start easy</h3>
+
+<div class="highlight highlight-csharp"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+        <span class="n">Person</span> <span class="n">p</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>Nothing special, it will just create a instance of a <strong><code>Person</code></strong> and fill it with some random data.</p>
+
+<h3>
+<a name="lets-use-the-fluent-setup-api" class="anchor" href="#lets-use-the-fluent-setup-api"><span class="octicon octicon-link"></span></a>Let's use the fluent setup API</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(()</span> <span class="p">=&gt;</span> <span class="s">"SomeString"</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="n">DateTime</span><span class="p">&gt;(()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">DateTime</span><span class="p">(</span><span class="m">2014</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">1</span><span class="p">));</span>
+            <span class="n">Person</span> <span class="n">p</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>So what does this do? First you say <strong><code>pFiller.Setup()</code></strong>. With <strong><code>.Setup()</code></strong> you start configure the ObjectFiller. In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there will be a property of type <strong><code>string</code></strong>, just fill it with the word "SomeString". And when there is a <strong><code>DateTime</code></strong> set it always to 1.4.2014! Easy! Isn't it? But it will get cooler!</p>
+
+<div class="highlight highlight-csharp"><pre>  <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="s">"John"</span><span class="p">,</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">RealNamePlugin</span><span class="p">(</span><span class="k">false</span><span class="p">,</span> <span class="k">true</span><span class="p">),</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">LastName</span><span class="p">);</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>Here we say: Ok ObjectFiller, fill the property <strong><code>Name</code></strong> of a <strong><code>Person</code></strong> with the value "John" and fill the property <strong><code>LastName</code></strong> with some random real lastname. The <strong><code>RealNamePlugin</code></strong> is a plugin which is written for the ObjectFiller and comes with the ObjectFiller.DLL.
+Its also really easy to write a plugin by yourself. I will show you that later.</p>
+
+<h3>
+<a name="ignore-properties" class="anchor" href="#ignore-properties"><span class="octicon octicon-link"></span></a>Ignore Properties</h3>
+
+<div class="highlight highlight-csharp"><pre>     <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">IgnoreProperties</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>With <strong><code>IgnoreProperties</code></strong> you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Name</code></strong>.</p>
+
+<h3>
+<a name="setup-subtypes" class="anchor" href="#setup-subtypes"><span class="octicon octicon-link"></span></a>Setup Subtypes</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">Address</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">City</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="s">"John"</span><span class="p">,</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="s">"Dresden"</span><span class="p">,</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">City</span><span class="p">);</span>
+
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>With <strong><code>SetupFor&lt;T&gt;</code></strong> you start a setup for another type. In the example above we define that the <code>Name</code> of the <code>Person</code> will be "John" and the <code>City</code> of an <code>Address</code>-object will be "Dresden". <strong><code>SetupFor&lt;T&gt;</code></strong> takes an <code>bool</code> parameter. if this is set to <strong><code>true</code></strong> than all the settings which was made to the parent type will be set back to default. When its not set or false, then the setup will take the setup of the parenttype, except the settings which are made specially for this actual type.</p>
+
+<h3>
+<a name="fill-objects-with-constructor-arguments" class="anchor" href="#fill-objects-with-constructor-arguments"><span class="octicon octicon-link"></span></a>Fill objects with constructor arguments</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Person</span><span class="p">(</span><span class="n">Address</span> <span class="n">address</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Address</span> <span class="p">=</span> <span class="n">address</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">Address</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">City</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">IgnoreProperties</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Address</span><span class="p">);</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>With ObjectFiller.NET it is also possible to <strong>instantiate</strong> objects which have a <strong>constructor WITH parameters</strong>. 
+In the setup i ignore the property <strong><code>Address</code></strong> of the person because it will be set in the constructor. 
+After call  <strong><code>.Fill()</code></strong> the property is filled because it is set in the constructor!</p>
+
+<p>Now lets do something really cool.</p>
+
+<h3>
+<a name="fill-interface-properties" class="anchor" href="#fill-interface-properties"><span class="octicon octicon-link"></span></a>Fill Interface-Properties</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">IAddress</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span> <span class="p">:</span> <span class="n">IAddress</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">City</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">interface</span> <span class="n">IAddress</span> <span class="p">{</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RegisterInterface</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">,</span> <span class="n">Address</span><span class="p">&gt;();</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>You see? The <strong><code>Person</code></strong> has now an <strong><code>Address</code></strong>. But wait? It's an <strong><code>IAddress</code></strong>! An <strong>interface</strong>? 
+YES! And ObjectFiller can handle that. Just say <strong><code>RegisterInterface</code></strong> and give the ObjectFiller the information what is the concrete implementation for that interface. Nice huh?</p>
+
+<h3>
+<a name="fill-lists-and-dictionaries" class="anchor" href="#fill-lists-and-dictionaries"><span class="octicon octicon-link"></span></a>Fill Lists and Dictionaries</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;&gt;</span> <span class="n">SenselessDictionary</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">&gt;</span> <span class="n">SenselessList</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span> <span class="p">:</span> <span class="n">IAddress</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">City</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">interface</span> <span class="n">IAddress</span> <span class="p">{</span>  <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RegisterInterface</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">,</span> <span class="n">Address</span><span class="p">&gt;();</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>It is also really easy possible to fill <strong><code>Dictionary</code></strong> and <strong><code>Lists</code></strong> objects.</p>
+
+<h3>
+<a name="mix-all-up" class="anchor" href="#mix-all-up"><span class="octicon octicon-link"></span></a>Mix all up</h3>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Person</span><span class="p">(</span><span class="n">IAddress</span> <span class="n">address</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Address</span> <span class="p">=</span> <span class="n">address</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">IAddress</span> <span class="n">Address</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;&gt;</span> <span class="n">SenselessDictionary</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">&gt;</span> <span class="n">SenselessList</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span> <span class="p">:</span> <span class="n">IAddress</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">City</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">interface</span> <span class="n">IAddress</span> <span class="p">{</span> <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RegisterInterface</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">,</span> <span class="n">Address</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">RealNamePlugin</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">false</span><span class="p">),</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">Random</span><span class="p">().</span><span class="n">Next</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">32</span><span class="p">),</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Age</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">MnemonicStringPlugin</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">a</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">City</span><span class="p">)</span>
+                <span class="p">.</span><span class="n">IgnoreProperties</span><span class="p">(</span><span class="n">a</span> <span class="p">=&gt;</span> <span class="n">a</span><span class="p">.</span><span class="n">Street</span><span class="p">);</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p><strong>Now let us mix all up!</strong> What happens here? Well, we say: Ok ObjectFiller, the <strong><code>IAddress</code></strong> interface will be implemented by the <strong><code>Address</code></strong> class.
+The <strong><code>Name</code></strong> and <strong><code>LastName</code></strong> of a person will be generated by the <strong><code>RealNamePlugin</code></strong>. The age of the person should be something between 10 and 32. 
+When you generate a city use the <strong><code>MnemonicStringPlugin</code></strong> and finally ignore the Street in the <strong><code>Address</code></strong> and don't fill it. Ok thats a lot. But it works!</p>
+
+<h2>
+<a name="available-plugins" class="anchor" href="#available-plugins"><span class="octicon octicon-link"></span></a>Available Plugins</h2>
+
+<p>The ObjectFiller.NET is easy to extend and you can write your own plugins for it.
+There are several plugins already implemented which are documented below.</p>
+
+<h3>
+<a name="mnemonicstringplugin" class="anchor" href="#mnemonicstringplugin"><span class="octicon octicon-link"></span></a>MnemonicStringPlugin</h3>
+
+<p>The <strong><code>MnemonicStringPlugin</code></strong> generates mnemonic words. A mnemonic word is a word with every second letter is a vowel. For example: Dubinola
+The advantage is that these words are mostly easy to pronounce.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">MnemonicStringPlugin</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">));</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>In this example we see how to use the <strong><code>MnemonicStringPlugin</code></strong>. It has three constructor parameters. The first one defines how much words will be generated. The second is the word min length and the last one is the word max length.</p>
+
+<h3>
+<a name="realnameplugin" class="anchor" href="#realnameplugin"><span class="octicon octicon-link"></span></a>RealNamePlugin</h3>
+
+<p>The <strong><code>RealNamePlugin</code></strong> is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin knows about 5000 First- and Lastnames. </p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">RealNamePlugin</span><span class="p">(</span><span class="k">true</span><span class="p">,</span> <span class="k">false</span><span class="p">));</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>The <strong><code>RealNamePlugin</code></strong> has up to two constructor parameters. They define if you want to generate a FirstName, a LastName or the FullName</p>
+
+<h3>
+<a name="randomlistitem---plugin" class="anchor" href="#randomlistitem---plugin"><span class="octicon octicon-link"></span></a>RandomListItem - Plugin</h3>
+
+<p>The <strong><code>RandomListItem</code></strong> plugin is usefull when you want to setup a predefined set of values which are possible to use. The <strong><code>RandomListItem</code></strong> will pick a random one.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">allNames</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span> <span class="p">};</span>
+
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">RandomListItem</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="n">allNames</span><span class="p">));</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>In the example u can see that i set up four names. One of these will be the name of the <strong><code>Person</code></strong> object.</p>
+
+<h3>
+<a name="write-your-own-plugin" class="anchor" href="#write-your-own-plugin"><span class="octicon octicon-link"></span></a>Write your own plugin</h3>
+
+<p>To write your own plugin is very easy.
+Just implement the <strong><code>IRandomizerPlugin&lt;T&gt;</code></strong> plugin. The typeparamer <strong><code>T</code></strong> defines for which type you will write the plugin. The interface just has one function which you have to implement: <strong><code>T GetValue();</code></strong>
+Thats all!
+You can write plugins for simple types and complex types.</p>
+
+<p>Here is a very simple example:</p>
+
+<div class="highlight highlight-csharp"><pre>  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyFirstPlugin</span> <span class="p">:</span> <span class="n">IRandomizerPlugin</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetValue</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">allNames</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span> <span class="p">};</span>
+            <span class="n">Random</span> <span class="n">r</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+
+            <span class="k">return</span> <span class="n">allNames</span><span class="p">[</span><span class="n">r</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">allNames</span><span class="p">.</span><span class="n">Count</span><span class="p">)];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="k">new</span> <span class="n">MyFirstPlugin</span><span class="p">());</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p><strong><code>MyFirstPlugin</code></strong> does basically the same thing as the <strong><code>RandomListItem</code></strong>-plugin, but it is a good way to show you how easy it is to implement your own plugin.</p>
+
+<h2>
+<a name="thank-you-for-using-objectfillernet" class="anchor" href="#thank-you-for-using-objectfillernet"><span class="octicon octicon-link"></span></a>Thank you for using ObjectFiller.NET</h2>
+
+<p>If you have any questions or found bugs, have ideas for improvements, feel free to contact me!</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Objectfiller.NET maintained by <a href="https://github.com/gokTyBalD">gokTyBalD</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
