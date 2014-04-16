@@ -150,14 +150,37 @@ Its also really easy to write a plugin by yourself. I will show you that later.<
         <span class="p">{</span>
             <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
             <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
-                <span class="p">.</span><span class="n">IgnoreProperties</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Name</span><span class="p">);</span>
+                <span class="p">.</span><span class="n">IgnoreProperties</span><span class="p">(</span><span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span> <span class="n">p</span> <span class="p">=&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">Age</span><span class="p">);</span>
 
             <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </pre></div>
 
-<p>With <strong><code>IgnoreProperties</code></strong> you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Name</code></strong>.</p>
+<p>With <strong><code>IgnoreProperties</code></strong> you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Age</code></strong>.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">IgnoreAllOfType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>With <strong><code>IgnoreAllOfType</code></strong> you can exclude all properties of a specific type. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Name</code></strong> because they are of type <strong><code>string</code></strong>.</p>
 
 <h3>
 <a name="setup-subtypes" class="anchor" href="#setup-subtypes"><span class="octicon octicon-link"></span></a>Setup Subtypes</h3>
