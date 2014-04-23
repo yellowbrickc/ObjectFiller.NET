@@ -31,7 +31,11 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>The <strong>.NET ObjectFiller</strong> fills the properties of your .NET objects with random data!
+        <h1>
+<a name="objectfillernet" class="anchor" href="#objectfillernet"><span class="octicon octicon-link"></span></a>ObjectFiller.NET</h1>
+
+<p><img align="left" src="https://raw.githubusercontent.com/Tynamix/ObjectFiller.NET/master/logo.png" alt="Logo">
+The <strong>.NET ObjectFiller</strong> fills the properties of your .NET objects with random data!
 It has a very comfortable Fluent API.
 You are able to fill object instances or you just let them create for you. 
 It is possible to create instances of classes which have constructors with parameters.
@@ -39,11 +43,44 @@ You can also fill properties which are derived by a interface.
 The <strong>.NET ObjectFiller</strong> also supports IEnumerable (and all derivations) and Dictionaries.</p>
 
 <h2>
+<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a>Table of contents</h2>
+
+<ul>
+<li><a href="#where-can-i-get-it">Where can i get it?</a></li>
+<li><a href="#for-what-do-you-need-it">For what do you need it?</a></li>
+<li><a href="#can-i-extend-the-net-objectfiller">Can i extend the .NET ObjectFiller?</a></li>
+<li>
+<a href="#examples">Examples</a>
+
+<ul>
+<li><a href="#lets-start-easy">Let's start easy</a></li>
+<li><a href="#lets-use-the-fluent-setup-api">Let's use the fluent setup API</a></li>
+<li><a href="#ignore-properties">Ignore Properties</a></li>
+<li><a href="#setup-subtypes">Setup Subtypes</a></li>
+<li><a href="#fill-objects-with-constructor-arguments">Fill objects with constructor arguments</a></li>
+<li><a href="#fill-interface-properties">Fill Interface-Properties</a></li>
+<li><a href="#fill-lists-and-dictionaries">Fill Lists and Dictionaries</a></li>
+<li><a href="#mix-all-up">Mix all up</a></li>
+</ul>
+</li>
+<li>
+<a href="#available-plugins">Available Plugins</a>
+
+<ul>
+<li><a href="#mix-all-up">Mix all up</a></li>
+<li><a href="#mnemonicstringplugin">MnemonicStringPlugin</a></li>
+<li><a href="#realnameplugin">RealNamePlugin</a></li>
+<li><a href="#randomlistitem---plugin">RandomListItem - Plugin</a></li>
+<li><a href="#patterngenerator-plugin">PatternGenerator Plugin</a></li>
+</ul>
+</li>
+<li><a href="#write-your-own-plugin">Write your own plugin</a></li>
+<li><a href="#thank-you-for-using-objectfillernet">Thank you</a></li>
+</ul><h2>
 <a name="where-can-i-get-it" class="anchor" href="#where-can-i-get-it"><span class="octicon octicon-link"></span></a>Where can i get it?</h2>
 
-<p>Easy, you can find it at nuget! It's just one DLL!</p>
-
-<p><strong>Look here:</strong> <a href="https://www.nuget.org/packages/Tynamix.ObjectFiller">https://www.nuget.org/packages/Tynamix.ObjectFiller</a></p>
+<p>Easy, you can find it at nuget! It's just one DLL!
+<strong>Look here:</strong> <a href="https://www.nuget.org/packages/Tynamix.ObjectFiller">https://www.nuget.org/packages/Tynamix.ObjectFiller</a></p>
 
 <h2>
 <a name="for-what-do-you-need-it" class="anchor" href="#for-what-do-you-need-it"><span class="octicon octicon-link"></span></a>For what do you need it?</h2>
@@ -67,7 +104,7 @@ I will show you some examples how you can work with it.</p>
 </ul><h2>
 <a name="can-i-extend-the-net-objectfiller" class="anchor" href="#can-i-extend-the-net-objectfiller"><span class="octicon octicon-link"></span></a>Can i extend the .NET ObjectFiller?</h2>
 
-<p>Of course! The <strong>.NET ObjectFiller</strong> is very flexible and easy to extend. With the help of the <strong>FluentAPI</strong> you can configure and extend the ObjectFiller. In the examples i will show you how to do it.</p>
+<p>Of course! The <strong>.NET ObjectFiller</strong> is very flexible and easy to extend. With the help of the <strong>FluentAPI</strong> you can configure and extend the ObjectFiller. You are also able to <a href="#write-your-own-plugin">write your own <strong>Plugin</strong></a>! In the examples i will show you how to do it. </p>
 
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
