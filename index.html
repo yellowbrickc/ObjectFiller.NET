@@ -16,14 +16,14 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/gokTyBalD/ObjectFiller.NET">View on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/Tynamix/ObjectFiller.NET">View on GitHub</a>
 
           <h1 id="project_title">Objectfiller.NET</h1>
           <h2 id="project_tagline">ObjectFiller .NET</h2>
 
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/gokTyBalD/ObjectFiller.NET/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/gokTyBalD/ObjectFiller.NET/tarball/master">Download this project as a tar.gz file</a>
+              <a class="zip_download_link" href="https://github.com/Tynamix/ObjectFiller.NET/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Tynamix/ObjectFiller.NET/tarball/master">Download this project as a tar.gz file</a>
             </section>
         </header>
     </div>
@@ -477,6 +477,61 @@ The advantage is that these words are mostly easy to pronounce.</p>
 <p>In the example u can see that i set up four names. One of these will be the name of the <strong><code>Person</code></strong> object.</p>
 
 <h3>
+<a name="patterngenerator-plugin" class="anchor" href="#patterngenerator-plugin"><span class="octicon octicon-link"></span></a>PatternGenerator Plugin</h3>
+
+<p>The <strong><code>PatternGenerator</code></strong> can be used to created strings following a pattern.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+
+        <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+            <span class="p">.</span><span class="n">RegisterInterface</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">,</span> <span class="n">Address</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"{A}{a:2-8}"</span><span class="p">),</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">City</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"CA {C:10000}"</span><span class="p">),</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">PostalCode</span><span class="p">)</span>
+            <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"Main Street {C:100,10} NE"</span><span class="p">),</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Street</span><span class="p">);</span>
+
+        <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>Address.City will become a string, starting with one upper-case char, followed by 2..8 lower-case chars.
+Address.PostalCode will start with the fixed value "CA ", followed by a number starting at 10000, incremented by 1 in the next address in the persons address list.
+The Main Street will include a number starting at 100, incremented by 10.</p>
+
+<p>The pattern generator can be extended, to allow combining built-in expressions and custom expressions within a pattern.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">FrenchUnicodeExpressionGenerator</span> <span class="p">:</span> <span class="n">IExpressionGenerator</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="n">IExpressionGenerator</span> <span class="nf">TryCreateInstance</span><span class="p">(</span><span class="kt">string</span> <span class="n">expression</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">expression</span> <span class="p">==</span> <span class="s">"{U:fr}"</span><span class="p">)</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">FrenchUnicodeExpressionGenerator</span><span class="p">();</span>
+            <span class="k">else</span> 
+                <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
+       <span class="p">}</span>
+
+       <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetValue</span><span class="p">()</span>
+       <span class="p">{</span>    
+            <span class="k">return</span> <span class="s">"Bonjour"</span><span class="p">;</span>
+       <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">PatterGenerator</span><span class="p">.</span><span class="n">ExpressionGeneratorFactories</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">FrenchUnicodeExpressionGenerator</span><span class="p">.</span><span class="n">TryCreateInstance</span><span class="p">);</span>
+
+        <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+
+        <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+            <span class="p">.</span><span class="n">RegisterInterface</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">,</span> <span class="n">Address</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
+            <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"{C}x {U:fr}"</span><span class="p">),</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Street</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></div>
+
+<h3>
 <a name="write-your-own-plugin" class="anchor" href="#write-your-own-plugin"><span class="octicon octicon-link"></span></a>Write your own plugin</h3>
 
 <p>To write your own plugin is very easy.
@@ -527,7 +582,7 @@ You can write plugins for simple types and complex types.</p>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Objectfiller.NET maintained by <a href="https://github.com/gokTyBalD">gokTyBalD</a></p>
+        <p class="copyright">Objectfiller.NET maintained by <a href="https://github.com/Tynamix">Tynamix</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
