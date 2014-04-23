@@ -70,8 +70,9 @@ The <strong>.NET ObjectFiller</strong> also supports IEnumerable (and all deriva
 <li><a href="#mix-all-up">Mix all up</a></li>
 <li><a href="#mnemonicstringplugin">MnemonicStringPlugin</a></li>
 <li><a href="#realnameplugin">RealNamePlugin</a></li>
-<li><a href="#randomlistitem---plugin">RandomListItem - Plugin</a></li>
+<li><a href="#randomlistitem---plugin">RandomListItem Plugin</a></li>
 <li><a href="#patterngenerator-plugin">PatternGenerator Plugin</a></li>
+<li><a href="#lorem-ipsum-string-plugin">Lorem Ipsum String Plugin</a></li>
 </ul>
 </li>
 <li><a href="#write-your-own-plugin">Write your own plugin</a></li>
@@ -567,6 +568,34 @@ The Main Street will include a number starting at 100, incremented by 10.</p>
             <span class="p">.</span><span class="n">RandomizerForProperty</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"{C}x {U:fr}"</span><span class="p">),</span> <span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Street</span><span class="p">);</span>
     <span class="p">}</span>
 </pre></div>
+
+<h3>
+<a name="lorem-ipsum-string-plugin" class="anchor" href="#lorem-ipsum-string-plugin"><span class="octicon octicon-link"></span></a>Lorem Ipsum String Plugin</h3>
+
+<p>The "Lorem Ipsum" plugin generates some random text which contains the famous "Lorem Ipsum" text. Read more about the Lorem Ipsum <a href="http://en.wikipedia.org/wiki/Lorem_ipsum">here</a></p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectFiller</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">RandomizerForType</span><span class="p">(</span><span class="k">new</span> <span class="n">LoremIpsumPlugin</span><span class="p">(</span><span class="m">500</span><span class="p">));</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Fill</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>This example generates a Lorem Ipsum text with 500 words for all <code>string</code> properties of the person.</p>
 
 <h3>
 <a name="write-your-own-plugin" class="anchor" href="#write-your-own-plugin"><span class="octicon octicon-link"></span></a>Write your own plugin</h3>
