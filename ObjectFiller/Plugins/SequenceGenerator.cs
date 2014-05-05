@@ -6,6 +6,10 @@ namespace Tynamix.ObjectFiller
 {
 	#region SequenceGeneratorSByte
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorSByte : IRandomizerPlugin<SByte>
 	{
 		/// <summary>
@@ -57,6 +61,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorInt16
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorInt16 : IRandomizerPlugin<Int16>
 	{
 		/// <summary>
@@ -108,6 +116,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorInt32
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorInt32 : IRandomizerPlugin<Int32>
 	{
 		/// <summary>
@@ -159,6 +171,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorInt64
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorInt64 : IRandomizerPlugin<Int64>
 	{
 		/// <summary>
@@ -210,6 +226,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorByte
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorByte : IRandomizerPlugin<Byte>
 	{
 		/// <summary>
@@ -260,6 +280,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorChar
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorChar : IRandomizerPlugin<Char>
 	{
 		/// <summary>
@@ -310,6 +334,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorUInt16
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorUInt16 : IRandomizerPlugin<UInt16>
 	{
 		/// <summary>
@@ -360,6 +388,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorUInt32
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorUInt32 : IRandomizerPlugin<UInt32>
 	{
 		/// <summary>
@@ -410,6 +442,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorUInt64
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorUInt64 : IRandomizerPlugin<UInt64>
 	{
 		/// <summary>
@@ -460,6 +496,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorSingle
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorSingle : IRandomizerPlugin<Single>
 	{
 		/// <summary>
@@ -511,6 +551,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorDouble
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorDouble : IRandomizerPlugin<Double>
 	{
 		/// <summary>
@@ -562,6 +606,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorDecimal
 
+	/// <summary>
+	/// Generates a sequence of values, like [1,2,3,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorDecimal : IRandomizerPlugin<Decimal>
 	{
 		/// <summary>
@@ -613,6 +661,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorBoolean
 
+	/// <summary>
+	/// Generates a sequence of values, like [true,false,true,...].
+	/// Use properties like <seealso cref="From"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorBoolean : IRandomizerPlugin<Boolean>
 	{
 		/// <summary>
@@ -641,6 +693,10 @@ namespace Tynamix.ObjectFiller
 
 	#region SequenceGeneratorDateTime
 
+	/// <summary>
+	/// Generates a sequence of <seealso cref="DateTime"/> values, like [2014-01-01,2014-01-02,...].
+	/// Use properties like <seealso cref="From"/>, <seealso cref="To"/> or <seealso cref="Step"/> to customize the generated sequence.
+	/// </summary>
 	public class SequenceGeneratorDateTime : IRandomizerPlugin<DateTime>
 	{
 		/// <summary>
