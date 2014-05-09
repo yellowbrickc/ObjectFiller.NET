@@ -91,8 +91,8 @@ namespace Tynamix.ObjectFiller
 		/// PatternGenerator.ExpressionGeneratorFactories.Add( 
 		///		(expression) => 
 		///			{
-		///				if (expression == "{U:fr}")
-		///					return new FrenchUnicodeExpressionGenerator(expression);
+		///				if (expression == "{F}")
+		///					return new FrenchWordExpressionGenerator(expression);
 		///				else 
 		///					return null;
 		///			});
