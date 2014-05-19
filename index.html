@@ -57,6 +57,7 @@ The <strong>.NET ObjectFiller</strong> also supports IEnumerable (and all deriva
 <li><a href="#lets-use-the-fluent-setup-api">Let's use the fluent setup API</a></li>
 <li><a href="#ignore-properties">Ignore Properties</a></li>
 <li><a href="#setup-subtypes">Setup Subtypes</a></li>
+<li><a href="#fill-objects-with-the-ienumerable-interface">Fill objects with the IEnumerable interface</a></li>
 <li><a href="#fill-objects-with-constructor-arguments">Fill objects with constructor arguments</a></li>
 <li><a href="#fill-interface-properties">Fill Interface-Properties</a></li>
 <li><a href="#fill-lists-and-dictionaries">Fill Lists and Dictionaries</a></li>
@@ -95,17 +96,18 @@ I will show you some examples how you can work with it.</p>
 <li>  ...fill the public writable properties of your objects</li>
 <li>  ...fills also all subobjects</li>
 <li>  ...has a nice FluentAPI</li>
-<li>  ...can handle constructor with parameters</li>
-<li>  ...can handle IEnumerable and all derivations</li>
-<li>  ...can handle Interfaces</li>
-<li>  ...cas handle Dictionaries</li>
+<li>  ...handles constructors with parameters</li>
+<li>  ...handles IEnumerable and all derivations</li>
+<li>  ...handles Interfaces</li>
+<li>  ...handles Dictionaries</li>
+<li>  ...handles Enumerations</li>
 <li>  ...is highly customizable</li>
 <li>  ...has many nice plugins</li>
 <li>  ...is very easy to extend</li>
 </ul><h2>
-<a name="can-i-extend-the-net-objectfiller" class="anchor" href="#can-i-extend-the-net-objectfiller"><span class="octicon octicon-link"></span></a>Can i extend the .NET ObjectFiller?</h2>
+<a name="can-i-extend-the-net-objectfiller" class="anchor" href="#can-i-extend-the-net-objectfiller"><span class="octicon octicon-link"></span></a>Can I extend the .NET ObjectFiller?</h2>
 
-<p>Of course! The <strong>.NET ObjectFiller</strong> is very flexible and easy to extend. With the help of the <strong>FluentAPI</strong> you can configure and extend the ObjectFiller. You are also able to <a href="#write-your-own-plugin">write your own <strong>Plugin</strong></a>! In the examples i will show you how to do it. </p>
+<p>Of course! The <strong>.NET ObjectFiller</strong> is very flexible and easy to extend. With the help of the <strong>FluentAPI</strong> you can configure and extend the ObjectFiller. You are also able to <a href="#write-your-own-plugin">write your own <strong>Plugin</strong></a>! In the examples I will show you how to do it. </p>
 
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
@@ -153,7 +155,7 @@ I will show you some examples how you can work with it.</p>
 <span class="p">}</span>
 </pre></div>
 
-<p>It is also possible to fill an already existing instance of an object. In the example we first create a person and then call <code>Fill(...)</code> instead of <code>Create()</code>. This is great for DesignViewModels in WPF for example or whereever you need to fill the object in the constructor with <code>Fill(this)</code> for example.</p>
+<p>It is also possible to fill an already existing instance of an object. In the example we first create a person and then call <code>Fill(...)</code> instead of <code>Create()</code>. This is great for stuff like DesignViewModels in WPF or whereever you need to fill the object in the constructor with <code>Fill(this)</code> for example.</p>
 
 <h3>
 <a name="lets-use-the-fluent-setup-api" class="anchor" href="#lets-use-the-fluent-setup-api"><span class="octicon octicon-link"></span></a>Let's use the fluent setup API</h3>
@@ -179,8 +181,8 @@ I will show you some examples how you can work with it.</p>
     <span class="p">}</span>
 </pre></div>
 
-<p>So what does this do? First you say <strong><code>pFiller.Setup()</code></strong>. With <strong><code>.Setup()</code></strong> you start configure the ObjectFiller. With <strong><code>OnType&lt;T&gt;()</code></strong> you define which type will be configured and with <strong><code>.Use( ... )</code></strong> you define what the objectfiller should do with the type. You are able to write your own <strong><code>.Func&lt;T&gt;()</code></strong> or implement a <strong><code>IRandomizerPlugin&lt;T&gt;</code></strong> or just use one which is already implemented. ObjectFiller is very flexible and easy to extend!
-In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there will be a property of type <strong><code>string</code></strong>, just fill it with the word "SomeString". And when there is a <strong><code>DateTime</code></strong> set it always to 1.4.2014! Easy! Isn't it? But it will get cooler!</p>
+<p>So what does the above code do? First you say <strong><code>pFiller.Setup()</code></strong>. With <strong><code>.Setup()</code></strong> you start configure the ObjectFiller. With <strong><code>OnType&lt;T&gt;()</code></strong> you define which type will be configured and with <strong><code>.Use( ... )</code></strong> you define what the Objectfiller should do with the type. You are able to write your own <strong><code>.Func&lt;T&gt;()</code></strong> or implement a <strong><code>IRandomizerPlugin&lt;T&gt;</code></strong>, or just use one of the provided plugins. ObjectFiller is very flexible and easy to extend!
+In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there will be a property of type <strong><code>string</code></strong>, just fill it with the word "SomeString". And when there is a <strong><code>DateTime</code></strong> set it always to 1.4.2014! Easy! Isn't it? But it will get even cooler!</p>
 
 <div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
     <span class="p">{</span>
@@ -204,8 +206,8 @@ In this example we say to the ObjectFiller: Hey ObjectFiller, whenever there wil
     <span class="p">}</span>
 </pre></div>
 
-<p>Here we say: Ok ObjectFiller, fill the property <strong><code>Name</code></strong> of a <strong><code>Person</code></strong> with the value "John" and fill the property <strong><code>LastName</code></strong> with some random real lastname. The <strong><code>.OnProperty</code></strong>-method works very similar to the <strong><code>OnType&lt;T&gt;()</code></strong> method! With <strong><code>.Use(new RealNames(false, true));</code></strong> we use a <strong><code>RealNamePlugin</code></strong>.
-The <strong><code>RealNamePlugin</code></strong> is a plugin which is written for the ObjectFiller and comes with the ObjectFiller.DLL.
+<p>Here we say: Ok ObjectFiller, fill the property <strong><code>Name</code></strong> of a <strong><code>Person</code></strong> with the value "John" and fill the property <strong><code>LastName</code></strong> with some random real lastname. The <strong><code>.OnProperty</code></strong> method works very similar to the <strong><code>OnType&lt;T&gt;()</code></strong> method! With <strong><code>.Use(new RealNames(false, true));</code></strong> we use a <strong><code>RealNamePlugin</code></strong>.
+The <strong><code>RealNamePlugin</code></strong> is a plugin which comes with the ObjectFiller assembly along.
 Its also really easy to write a plugin by yourself. I will show you that later.</p>
 
 <h3>
@@ -232,7 +234,7 @@ Its also really easy to write a plugin by yourself. I will show you that later.<
     <span class="p">}</span>
 </pre></div>
 
-<p>With <strong><code>.IgnoreIt()</code></strong> you can exclude properties to not generate random data for it. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Name</code></strong>.</p>
+<p>With <strong><code>.IgnoreIt()</code></strong> you can exclude properties from randomizing, they will keep their default value instead. When we will now fill a person, all properties get filled except <strong><code>LastName</code></strong> and <strong><code>Name</code></strong>.</p>
 
 <div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
     <span class="p">{</span>
@@ -291,7 +293,46 @@ Its also really easy to write a plugin by yourself. I will show you that later.<
     <span class="p">}</span>
 </pre></div>
 
-<p>With <strong><code>SetupFor&lt;T&gt;</code></strong> you start a setup for another type. In the example above we define that the <code>Name</code> of the <code>Person</code> will be "John" and the <code>City</code> of an <code>Address</code>-object will be "Dresden". <strong><code>SetupFor&lt;T&gt;</code></strong> takes an <code>bool</code> parameter. if this is set to <strong><code>true</code></strong> than all the settings which was made to the parent type will be set back to default. When its not set or false, then the setup will take the setup of the parenttype, except the settings which are made specially for this actual type.</p>
+<p>With <strong><code>SetupFor&lt;T&gt;</code></strong> you start a setup for another type. In the example above we define that the <code>Name</code> of the <code>Person</code> will be "John" and the <code>City</code> of an <code>Address</code> object will be "Dresden". <strong><code>SetupFor&lt;T&gt;</code></strong> takes an <code>bool</code> parameter. If this is set to <strong><code>true</code></strong> then all the settings which were made on the parent type will be set back to default. When a property is not set up, then the filler will take the setup of the parent type, except the settings which are made specially for this actual type.</p>
+
+<h3>
+<a name="fill-objects-with-the-ienumerable-interface" class="anchor" href="#fill-objects-with-the-ienumerable-interface"><span class="octicon octicon-link"></span></a>Fill objects with the IEnumerable interface</h3>
+
+<p>With ObjectFiller.NET you can use the IEnumerable interface to fill objects. Use it for example when you want to fill a property in a specific order with include and exclude and all the other cool stuff which IEnumerable and LINQ supports.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Age</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">public</span> <span class="n">DateTime</span> <span class="n">Birthday</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;</span> <span class="n">Addresses</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Address</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="kt">int</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">public</span> <span class="kt">string</span> <span class="n">Street</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">HelloFiller</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
+            <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
+                <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
+                <span class="p">.</span><span class="n">OnProperty</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Id</span><span class="p">).</span><span class="n">Use</span><span class="p">(</span><span class="n">Enumerable</span><span class="p">.</span><span class="n">Range</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="n">Where</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span> <span class="p">%</span> <span class="m">2</span> <span class="p">==</span> <span class="m">0</span><span class="p">));</span>
+
+            <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Create</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>In this example the ID of an Address item will be an even number between 1 and 100 in ascending order.
+This means, the first Address will have the Id 2, the second the Id 4, the fourth Id 6 and so...</p>
 
 <h3>
 <a name="fill-objects-with-constructor-arguments" class="anchor" href="#fill-objects-with-constructor-arguments"><span class="octicon octicon-link"></span></a>Fill objects with constructor arguments</h3>
@@ -331,7 +372,7 @@ Its also really easy to write a plugin by yourself. I will show you that later.<
 </pre></div>
 
 <p>With ObjectFiller.NET it is also possible to <strong>instantiate</strong> objects which have a <strong>constructor WITH parameters</strong>. 
-In the setup i ignore the property <strong><code>Address</code></strong> of the person because it will already been set in the constructor. </p>
+In the above setup I ignore the <strong><code>Address</code></strong> property. </p>
 
 <p>Now lets do something really cool.</p>
 
@@ -368,7 +409,7 @@ In the setup i ignore the property <strong><code>Address</code></strong> of the 
     <span class="p">}</span>
 </pre></div>
 
-<p>You see? The <strong><code>Person</code></strong> has now an <strong><code>Address</code></strong>. But wait? It's an <strong><code>IAddress</code></strong>! An <strong>interface</strong>? 
+<p>You see? The <strong><code>Person</code></strong> has now an <strong><code>Address</code></strong>. But wait? It is an <strong><code>IAddress</code></strong>! An <strong>interface</strong>? 
 YES! And ObjectFiller can handle that. Just say <strong><code>.Register&lt;T&gt;()</code></strong> after you called <strong><code>.OnType&lt;T&gt;()</code></strong> and give the ObjectFiller the information what is the concrete implementation for that interface. Nice huh?</p>
 
 <h3>
@@ -449,20 +490,20 @@ YES! And ObjectFiller can handle that. Just say <strong><code>.Register&lt;T&gt;
 </pre></div>
 
 <p><strong>Now let us mix all up!</strong> What happens here? Well, we say: Ok ObjectFiller, the <strong><code>IAddress</code></strong> interface will be implemented by the <strong><code>Address</code></strong> class.
-The <strong><code>Name</code></strong> and <strong><code>LastName</code></strong> of a person will be generated by the <strong><code>RealNamesPlugin</code></strong>. The age of the person should be something between 10 and 32. 
-When you generate a city use the <strong><code>MnemonicStringPlugin</code></strong> and finally ignore the Street in the <strong><code>Address</code></strong> and don't fill it. Ok thats a lot. But it works!</p>
+The <strong><code>Name</code></strong> and <strong><code>LastName</code></strong> of a person will be generated by the <strong><code>RealNamesPlugin</code></strong>. The age of the person should be somewhere between 10 and 32. 
+When you generate a city use the <strong><code>MnemonicStringPlugin</code></strong> and finally ignore the Street in the <strong><code>Address</code></strong>. Quite a lot. But it works!</p>
 
 <h2>
 <a name="available-plugins" class="anchor" href="#available-plugins"><span class="octicon octicon-link"></span></a>Available Plugins</h2>
 
-<p>The ObjectFiller.NET is easy to extend and you can write your own plugins for it.
+<p>The ObjectFiller.NET is easy to extend, you can write your own plugins for it.
 There are several plugins already implemented which are documented below.</p>
 
 <h3>
 <a name="rangeintegerplugin" class="anchor" href="#rangeintegerplugin"><span class="octicon octicon-link"></span></a>RangeIntegerPlugin</h3>
 
-<p>The <strong><code>RangeIntegerPlugin</code></strong> is a very easy plugin and generates integers in a given range.
-It has upto two constructor parameter. The first one is the maximum value and the second one (optional) the minimum. When minimum is not set, the minimum will be 0!</p>
+<p>The <strong><code>RangeIntegerPlugin</code></strong> is a very simple plugin and generates integers in a given range.
+It has up to two constructor parameter. The first one is the maximum value and the second one (optional) the minimum. When minimum is not set, the minimum will be 0!</p>
 
 <div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
     <span class="p">{</span>
@@ -514,7 +555,7 @@ The advantage is that these words are mostly easy to pronounce.</p>
 <h3>
 <a name="realnameplugin" class="anchor" href="#realnameplugin"><span class="octicon octicon-link"></span></a>RealNamePlugin</h3>
 
-<p>The <strong><code>RealNamePlugin</code></strong> is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin knows about 5000 First- and Lastnames. </p>
+<p>The <strong><code>RealNamePlugin</code></strong> is made to generate strings based on real names like "Jennifer" or "Miller". The realname plugin contains about 5000 first- and last names. </p>
 
 <div class="highlight highlight-csharp"><pre>        <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
         <span class="p">{</span>
@@ -540,12 +581,12 @@ The advantage is that these words are mostly easy to pronounce.</p>
         <span class="p">}</span>
 </pre></div>
 
-<p>The <strong><code>RealNamePlugin</code></strong> has a <code>RealNameStyle</code>-enumeration as constructor parameter. With that enumeration you are able to define how the generated name should look like.</p>
+<p>The <strong><code>RealNamePlugin</code></strong> has a <code>RealNameStyle</code> enumeration as constructor parameter. With that enumeration you are able to define how the generated name should look like.</p>
 
 <h3>
 <a name="randomlistitem---plugin" class="anchor" href="#randomlistitem---plugin"><span class="octicon octicon-link"></span></a>RandomListItem - Plugin</h3>
 
-<p>The <strong><code>RandomListItem</code></strong> plugin is usefull when you want to setup a predefined set of values which are possible to use. The <strong><code>RandomListItem</code></strong> will then pick a random one from the list.</p>
+<p>The <strong><code>RandomListItem</code></strong> plugin is usefull when you want to choose the output values from a certain set of values. The <strong><code>RandomListItem</code></strong> will then pick randomly one item from the list.</p>
 
 <div class="highlight highlight-csharp"><pre>     <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
     <span class="p">{</span>
@@ -567,12 +608,12 @@ The advantage is that these words are mostly easy to pronounce.</p>
     <span class="p">}</span>
 </pre></div>
 
-<p>In the example u can see that i set up four names. One of these will be the name of the <strong><code>Person</code></strong> object.</p>
+<p>In the example you can see that I set up four value, one of them  will be the generated name of the <strong><code>Person</code></strong> object.</p>
 
 <h3>
 <a name="patterngenerator-plugin" class="anchor" href="#patterngenerator-plugin"><span class="octicon octicon-link"></span></a>PatternGenerator Plugin</h3>
 
-<p>The <strong><code>PatternGenerator</code></strong> can be used to created strings following a pattern.</p>
+<p>The <strong><code>PatternGenerator</code></strong> can be used to created strings following a certain pattern. The actual pattern documentation can be found in <strong><code>PatternGenerator</code></strong> documentation.</p>
 
 <div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
     <span class="p">{</span>
@@ -607,18 +648,19 @@ The advantage is that these words are mostly easy to pronounce.</p>
     <span class="p">}</span>
 </pre></div>
 
-<p>Address.City will become a string, starting with one upper-case char, followed by 2..8 lower-case chars.
+<p>Some explanation is in order, I think:
+Address.City will become a string, starting with exactly one upper-case char, followed by 2..8 lower-case chars.
 Address.PostalCode will start with the fixed value "CA ", followed by a number starting at 10000, incremented by 1 in the next address in the persons address list.
-The Main Street will include a number starting at 100, incremented by 10.</p>
+The street property will contain the text "Main Street ", followed by a (street) number starting at 100, incremented by 10.</p>
 
 <p>The pattern generator can be extended, to allow combining built-in expressions and custom expressions within a pattern.</p>
 
-<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">FrenchUnicodeExpressionGenerator</span> <span class="p">:</span> <span class="n">IExpressionGenerator</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span>
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">class</span> <span class="nc">FrenchWordExpressionGenerator</span> <span class="p">:</span> <span class="n">IExpressionGenerator</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span>
     <span class="p">{</span>
         <span class="k">public</span> <span class="k">static</span> <span class="n">IExpressionGenerator</span> <span class="nf">TryCreateInstance</span><span class="p">(</span><span class="kt">string</span> <span class="n">expression</span><span class="p">)</span>
         <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">expression</span> <span class="p">==</span> <span class="s">"{U:fr}"</span><span class="p">)</span>
-                <span class="k">return</span> <span class="k">new</span> <span class="nf">FrenchUnicodeExpressionGenerator</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">expression</span> <span class="p">==</span> <span class="s">"{F}"</span><span class="p">)</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">FrenchWordExpressionGenerator</span><span class="p">();</span>
             <span class="k">else</span> 
                 <span class="k">return</span> <span class="k">null</span><span class="p">;</span>
        <span class="p">}</span>
@@ -631,14 +673,14 @@ The Main Street will include a number starting at 100, incremented by 10.</p>
 
     <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="n">PatterGenerator</span><span class="p">.</span><span class="n">ExpressionGeneratorFactories</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">FrenchUnicodeExpressionGenerator</span><span class="p">.</span><span class="n">TryCreateInstance</span><span class="p">);</span>
+        <span class="n">PatterGenerator</span><span class="p">.</span><span class="n">ExpressionGeneratorFactories</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">FrenchWordExpressionGenerator</span><span class="p">.</span><span class="n">TryCreateInstance</span><span class="p">);</span>
 
         <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
 
         <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
             <span class="p">.</span><span class="n">OnType</span><span class="p">&lt;</span><span class="n">IAddress</span><span class="p">&gt;().</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
             <span class="p">.</span><span class="n">SetupFor</span><span class="p">&lt;</span><span class="n">Address</span><span class="p">&gt;()</span>
-            <span class="p">.</span><span class="n">OnProperty</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Street</span><span class="p">).</span><span class="n">Use</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"{C}x {U:fr}"</span><span class="p">));</span>
+            <span class="p">.</span><span class="n">OnProperty</span><span class="p">(</span><span class="n">x</span> <span class="p">=&gt;</span> <span class="n">x</span><span class="p">.</span><span class="n">Street</span><span class="p">).</span><span class="n">Use</span><span class="p">(</span><span class="k">new</span> <span class="n">PatternGenerator</span><span class="p">(</span><span class="s">"{C}x {F}"</span><span class="p">));</span>
     <span class="p">}</span>
 </pre></div>
 
@@ -671,10 +713,25 @@ The Main Street will include a number starting at 100, incremented by 10.</p>
 <p>This example generates a Lorem Ipsum text with 500 words for all <code>string</code> properties of the person.</p>
 
 <h3>
+<a name="sequencegenerator-plugins" class="anchor" href="#sequencegenerator-plugins"><span class="octicon octicon-link"></span></a>SequenceGenerator Plugins</h3>
+
+<p>The ObjectFiller contains also tons of sequence generators, like the SequenceGeneratorInt32 or the SequenceGeneratorDateTime. When used without any particular setup, they will simply create an increasing sequence like [1,2,3,...]. Most of these sequence generators can be customized to use a different start value (From), a different increment (Step) or can even wrap around after hitting an end value (To). The Step property can be even set to a negative value to generate a decreasing sequence, like in the example below.</p>
+
+<div class="highlight highlight-csharp"><pre>    <span class="k">public</span> <span class="k">void</span> <span class="nf">Countdown</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">generator</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SequenceGeneratorInt32</span> <span class="p">{</span> <span class="n">From</span> <span class="p">=</span> <span class="m">3</span><span class="p">,</span> <span class="n">Step</span> <span class="p">=</span> <span class="p">-</span><span class="m">3</span> <span class="p">};</span>
+        <span class="n">generator</span><span class="p">.</span><span class="n">GetValue</span><span class="p">();</span> <span class="c1">// returns  3</span>
+        <span class="n">generator</span><span class="p">.</span><span class="n">GetValue</span><span class="p">();</span> <span class="c1">// returns  0</span>
+        <span class="n">generator</span><span class="p">.</span><span class="n">GetValue</span><span class="p">();</span> <span class="c1">// returns -3</span>
+        <span class="n">generator</span><span class="p">.</span><span class="n">GetValue</span><span class="p">();</span> <span class="c1">// returns -6</span>
+    <span class="p">}</span>
+</pre></div>
+
+<h3>
 <a name="write-your-own-plugin" class="anchor" href="#write-your-own-plugin"><span class="octicon octicon-link"></span></a>Write your own plugin</h3>
 
-<p>To write your own plugin is very easy.
-Just implement the <strong><code>IRandomizerPlugin&lt;T&gt;</code></strong> plugin. The typeparamer <strong><code>T</code></strong> defines for which type you will write the plugin. The interface just has one function which you have to implement: <strong><code>T GetValue();</code></strong>
+<p>Writing your own plugin is very easy.
+Just implement the <strong><code>IRandomizerPlugin&lt;T&gt;</code></strong> plugin. The typeparameter <strong><code>T</code></strong> defines for which type you will write the plugin. The interface just has one function which you have to implement: <strong><code>T GetValue();</code></strong>
 Thats all!
 You can write plugins for simple types and complex types.</p>
 
@@ -682,11 +739,11 @@ You can write plugins for simple types and complex types.</p>
 
 <div class="highlight highlight-csharp"><pre>  <span class="k">public</span> <span class="k">class</span> <span class="nc">MyFirstPlugin</span> <span class="p">:</span> <span class="n">IRandomizerPlugin</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span>
     <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">Random</span> <span class="n">r</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">allNames</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span> <span class="p">};</span>
+
         <span class="k">public</span> <span class="kt">string</span> <span class="nf">GetValue</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">allNames</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span> <span class="p">};</span>
-            <span class="n">Random</span> <span class="n">r</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Random</span><span class="p">();</span>
-
             <span class="k">return</span> <span class="n">allNames</span><span class="p">[</span><span class="n">r</span><span class="p">.</span><span class="n">Next</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">allNames</span><span class="p">.</span><span class="n">Count</span><span class="p">)];</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -709,7 +766,7 @@ You can write plugins for simple types and complex types.</p>
     <span class="p">}</span>
 </pre></div>
 
-<p><strong><code>MyFirstPlugin</code></strong> does basically the same thing as the <strong><code>RandomListItem</code></strong>-plugin, but it is a good way to show you how easy it is to implement your own plugin.</p>
+<p><strong><code>MyFirstPlugin</code></strong> does basically the same thing as the <strong><code>RandomListItem</code></strong> plugin, but it is a good way to show you how easy it is to implement your own plugin.</p>
 
 <h2>
 <a name="thank-you-for-using-objectfillernet" class="anchor" href="#thank-you-for-using-objectfillernet"><span class="octicon octicon-link"></span></a>Thank you for using ObjectFiller.NET</h2>
