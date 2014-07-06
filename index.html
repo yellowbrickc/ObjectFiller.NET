@@ -598,18 +598,16 @@ The advantage is that these words are mostly easy to pronounce.</p>
     <span class="p">{</span>
         <span class="k">public</span> <span class="k">void</span> <span class="nf">FillPerson</span><span class="p">()</span>
         <span class="p">{</span>
-            <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">allNames</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;()</span> <span class="p">{</span> <span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span> <span class="p">};</span>
-
             <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;</span> <span class="n">pFiller</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Filler</span><span class="p">&lt;</span><span class="n">Person</span><span class="p">&gt;();</span>
             <span class="n">pFiller</span><span class="p">.</span><span class="n">Setup</span><span class="p">()</span>
-                <span class="p">.</span><span class="n">OnType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;().</span><span class="n">Use</span><span class="p">(</span><span class="k">new</span> <span class="n">RandomListItem</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="n">allNames</span><span class="p">));</span>
+                <span class="p">.</span><span class="n">OnType</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;().</span><span class="n">Use</span><span class="p">(</span><span class="k">new</span> <span class="n">RandomListItem</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;(</span><span class="s">"Jennifer"</span><span class="p">,</span> <span class="s">"Jenny"</span><span class="p">,</span> <span class="s">"Tom"</span><span class="p">,</span> <span class="s">"John"</span><span class="p">));</span>
 
             <span class="n">Person</span> <span class="n">filledPerson</span> <span class="p">=</span> <span class="n">pFiller</span><span class="p">.</span><span class="n">Create</span><span class="p">();</span>
         <span class="p">}</span>
     <span class="p">}</span>
 </pre></div>
 
-<p>In the example you can see that I set up four value, one of them  will be the generated name of the <strong><code>Person</code></strong> object.</p>
+<p>In the example you can see that I set up four values, one of them  will be the generated name of the <strong><code>Person</code></strong> object.</p>
 
 <h3>
 <a name="patterngenerator-plugin" class="anchor" href="#patterngenerator-plugin"><span class="octicon octicon-link"></span></a>PatternGenerator Plugin</h3>
