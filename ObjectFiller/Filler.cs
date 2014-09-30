@@ -391,6 +391,15 @@ namespace Tynamix.ObjectFiller
                 object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
                 list.Add(listObject);
             }
+
+            //Action fillAction = () =>
+            //    {
+            //        object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
+            //        list.Add(listObject);
+            //    };
+
+            //ParallelExtension.ParallelFor(fillAction, maxListItems);
+
             return list;
         }
 
