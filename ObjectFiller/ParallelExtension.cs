@@ -81,7 +81,10 @@ namespace Tynamix.ObjectFiller
             }
 
             // Wait for all threads to execute
-            WaitHandle.WaitAll(resetEvents);
+            foreach (ManualResetEvent manualResetEvent in resetEvents)
+            {
+                manualResetEvent.WaitOne();
+            }
         }
     }
 }

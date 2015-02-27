@@ -16,6 +16,8 @@ namespace Tynamix.ObjectFiller
     {
         private readonly SetupManager _setupManager;
 
+        private object _lockObject = new object();
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -55,11 +57,16 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public T Create()
         {
-            T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>(), new HashStack<Type>());
 
             Fill(objectToFill);
 
+            Debug.WriteLine(string.Format("Time estimated: {0}", sw.Elapsed));
+
             return objectToFill;
+
         }
 
         /// <summary>
@@ -70,7 +77,7 @@ namespace Tynamix.ObjectFiller
         {
             for (int n = 0; n < count; n++)
             {
-                T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>());
+                T objectToFill = (T)CreateInstanceOfType(typeof(T), _setupManager.GetFor<T>(), new HashStack<Type>());
                 Fill(objectToFill);
                 yield return objectToFill;
             }
@@ -81,13 +88,13 @@ namespace Tynamix.ObjectFiller
         /// </summary>
         public T Fill(T instanceToFill)
         {
-            FillInternal(instanceToFill);
+            FillInternal(instanceToFill, new HashStack<Type>());
 
             return instanceToFill;
         }
 
 
-        private object CreateInstanceOfType(Type type, FillerSetupItem currentSetupItem)
+        private object CreateInstanceOfType(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
             List<object> constructorArgs = new List<object>();
 
@@ -104,7 +111,7 @@ namespace Tynamix.ObjectFiller
                         {
                             foreach (Type paramType in paramTypes)
                             {
-                                constructorArgs.Add(GetFilledObject(paramType, currentSetupItem));
+                                constructorArgs.Add(GetFilledObject(paramType, currentSetupItem, typeTracker));
                             }
 
                             break;
@@ -125,12 +132,10 @@ namespace Tynamix.ObjectFiller
         }
 
 
-        private void FillInternal(object objectToFill, HashStack<Type> typeTracker = null)
+        private void FillInternal(object objectToFill, HashStack<Type> typeTracker)
         {
             var currentSetup = _setupManager.GetFor(objectToFill.GetType());
             var targetType = objectToFill.GetType();
-
-            typeTracker = typeTracker ?? new HashStack<Type>();
 
             if (currentSetup.TypeToRandomFunc.ContainsKey(targetType))
             {
@@ -288,17 +293,20 @@ namespace Tynamix.ObjectFiller
         {
             if (typeTracker != null)
             {
-                if (typeTracker.Contains(targetType))
+                lock (_lockObject)
                 {
-                    if (currentSetupItem.ThrowExceptionOnCircularReference)
+                    if (typeTracker.Contains(targetType))
                     {
-                        throw new InvalidOperationException(
-                                string.Format(
-                                    "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
-                                    targetType.Name));
-                    }
+                        if (currentSetupItem.ThrowExceptionOnCircularReference)
+                        {
+                            throw new InvalidOperationException(
+                                    string.Format(
+                                        "The type {0} was already encountered before, which probably means you have a circular reference in your model. Either ignore the properties which cause this or specify explicit creation rules for them which do not rely on types.",
+                                        targetType.Name));
+                        }
 
-                    return true;
+                        return true;
+                    }
                 }
             }
 
@@ -307,22 +315,28 @@ namespace Tynamix.ObjectFiller
 
         private object GetFilledPoco(Type type, FillerSetupItem currentSetupItem, HashStack<Type> typeTracker)
         {
-            if (CheckForCircularReference(type, typeTracker, currentSetupItem))
+            lock (_lockObject)
             {
-                return GetDefaultValueOfType(type);
-            }
-            typeTracker.Push(type);
+                if (CheckForCircularReference(type, typeTracker, currentSetupItem))
+                {
+                    return GetDefaultValueOfType(type);
+                }
 
-            object result = CreateInstanceOfType(type, currentSetupItem);
+                typeTracker.Push(type);
+            }
+
+            object result = CreateInstanceOfType(type, currentSetupItem, typeTracker);
 
             FillInternal(result, typeTracker);
 
-            if (typeTracker != null)
+            lock (_lockObject)
             {
-                // once we fully filled the object, we can pop so other properties in the hierarchy can use the same types
-                typeTracker.Pop();
+                if (typeTracker != null && typeTracker.Contains(type))
+                {
+                    // once we fully filled the object, we can pop so other properties in the hierarchy can use the same types
+                    typeTracker.Pop();
+                }
             }
-
             return result;
         }
 
@@ -361,9 +375,12 @@ namespace Tynamix.ObjectFiller
         {
             Type genType = propertyType.GetGenericArguments()[0];
 
-            if (CheckForCircularReference(genType, typeTracker, currentSetupItem))
+            lock (_lockObject)
             {
-                return null;
+                if (CheckForCircularReference(genType, typeTracker, currentSetupItem))
+                {
+                    return null;
+                }
             }
 
             IList list;
@@ -386,19 +403,23 @@ namespace Tynamix.ObjectFiller
 
 
             int maxListItems = Random.Next(currentSetupItem.ListMinCount, currentSetupItem.ListMaxCount);
-            for (int i = 0; i < maxListItems; i++)
-            {
-                object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
-                list.Add(listObject);
-            }
+            //for (int i = 0; i < maxListItems; i++)
+            //{
+            //    object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
+            //    list.Add(listObject);
+            //}
 
-            //Action fillAction = () =>
-            //    {
-            //        object listObject = GetFilledObject(genType, currentSetupItem, typeTracker);
-            //        list.Add(listObject);
-            //    };
+            Action fillAction = () =>
+                {
+                    object listObject = GetFilledObject(genType, currentSetupItem, new HashStack<Type>());
 
-            //ParallelExtension.ParallelFor(fillAction, maxListItems);
+                    lock (_lockObject)
+                    {
+                        list.Add(listObject);
+                    }
+                };
+
+            ParallelExtension.ParallelFor(fillAction, maxListItems);
 
             return list;
         }
@@ -413,7 +434,7 @@ namespace Tynamix.ObjectFiller
             if (setupItem.InterfaceToImplementation.ContainsKey(interfaceType))
             {
                 Type implType = setupItem.InterfaceToImplementation[interfaceType];
-                result = CreateInstanceOfType(implType, setupItem);
+                result = CreateInstanceOfType(implType, setupItem, typeTracker);
             }
             else
             {

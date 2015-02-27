@@ -5,6 +5,8 @@ using Tynamix.ObjectFiller;
 
 namespace ObjectFiller.Test
 {
+    using System.Threading;
+
     [TestClass]
     public class ObjectFillerRecursiveTests
     {
@@ -177,7 +179,6 @@ namespace ObjectFiller.Test
         {
             var filler = new Filler<Parent>();
             var r = filler.Create();
-
             Assert.IsNull(r.Childrens[0].Parent.Childrens);
         }
 

@@ -20,7 +20,8 @@ namespace Tynamix.ObjectFiller
         private readonly HashSet<T> _set;
         private readonly Stack<T> _stack;
 
-        internal HashStack() : this(EqualityComparer<T>.Default)
+        internal HashStack()
+            : this(EqualityComparer<T>.Default)
         {
         }
 
