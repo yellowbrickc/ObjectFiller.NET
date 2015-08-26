@@ -20,7 +20,7 @@ namespace Tynamix.ObjectFiller
     public enum City
     {
         /// <summary>
-        /// Dresden is a city in germany
+        /// Dresden is a city in Germany
         /// </summary>
         Dresden,
 
@@ -45,7 +45,7 @@ namespace Tynamix.ObjectFiller
         Tokyo,
 
         /// <summary>
-        /// Moscow is a city in russia
+        /// Moscow is a city in Russia
         /// </summary>
         Moscow
     }
